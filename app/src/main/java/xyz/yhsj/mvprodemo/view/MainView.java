@@ -17,6 +17,12 @@ public class MainView extends ViewImpl {
     FloatingActionButton fab;
 
     @Override
+    public void created() {
+        super.created();
+        ButterKnife.bind(this,mRootView);
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.activity_main;
     }
@@ -37,9 +43,5 @@ public class MainView extends ViewImpl {
         return R.menu.menu_main;
     }
 
-    @Override
-    public void created() {
-        super.created();
-        ButterKnife.bind(this,mRootView);
-    }
+
 }

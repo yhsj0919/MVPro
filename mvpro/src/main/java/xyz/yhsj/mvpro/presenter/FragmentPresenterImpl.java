@@ -23,8 +23,7 @@ public class FragmentPresenterImpl<T extends IView> extends Fragment implements 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         create(savedInstanceState);
         try {
             mView = getViewClass().newInstance();
@@ -59,5 +58,19 @@ public class FragmentPresenterImpl<T extends IView> extends Fragment implements 
     @Override
     public void created(Bundle savedInstance) {
 
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (mView == null) {
+            try {
+                mView = getViewClass().newInstance();
+            } catch (java.lang.InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

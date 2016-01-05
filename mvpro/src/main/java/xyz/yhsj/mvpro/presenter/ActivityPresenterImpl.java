@@ -49,7 +49,7 @@ public class ActivityPresenterImpl<T extends IView> extends AppCompatActivity im
     /**
      * 菜单
      *
-     * @param menu *
+     * @param menu
      * @return
      */
     @Override
@@ -84,5 +84,20 @@ public class ActivityPresenterImpl<T extends IView> extends AppCompatActivity im
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (mView == null) {
+            try {
+                mView = getViewClass().newInstance();
+            } catch (InstantiationException e) {
+                throw new RuntimeException("create IDelegate error");
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("create IDelegate error");
+            }
+        }
+    }
+
 
 }

@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import xyz.yhsj.mvpro.R;
 import xyz.yhsj.mvpro.helper.GenericHelper;
 import xyz.yhsj.mvpro.view.IView;
 

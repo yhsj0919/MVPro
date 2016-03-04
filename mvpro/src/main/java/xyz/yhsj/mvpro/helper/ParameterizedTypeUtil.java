@@ -64,12 +64,10 @@ public class ParameterizedTypeUtil {
         Class<?> superClass = clazz.getSuperclass();
         if (superClass != null) {
             if (declaredClass.isAssignableFrom(superClass)) {
-                return getTrueType(getParameterizedType(clazz.getGenericSuperclass(),declaredClass, paramIndex), tps, ats);
+                return getTrueType(getParameterizedType(clazz.getGenericSuperclass(), declaredClass, paramIndex), tps, ats);
             }
         }
-
-        throw new IllegalArgumentException("FindGenericType:" + ownerType +", declaredClass: " + declaredClass + ", index: " + paramIndex);
-
+        throw new IllegalArgumentException("FindGenericType:" + ownerType + ", declaredClass: " + declaredClass + ", index: " + paramIndex);
     }
 
 
@@ -99,6 +97,16 @@ public class ParameterizedTypeUtil {
             }
         }
         return type;
+    }
+
+
+    public static <T> Class<T> getViewClass(Class<?> klass) {
+        Type type = klass.getGenericSuperclass();
+        if (type == null || !(type instanceof ParameterizedType)) return null;
+        ParameterizedType parameterizedType = (ParameterizedType) type;
+        Type[] types = parameterizedType.getActualTypeArguments();
+        if (types == null || types.length == 0) return null;
+        return (Class<T>) types[0];
     }
 
 }

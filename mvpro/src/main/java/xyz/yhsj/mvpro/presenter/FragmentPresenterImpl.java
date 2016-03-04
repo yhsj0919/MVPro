@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import xyz.yhsj.mvpro.helper.GenericHelper;
+import xyz.yhsj.mvpro.helper.ParameterizedTypeUtil;
 import xyz.yhsj.mvpro.view.IView;
 
 
@@ -39,7 +39,7 @@ public class FragmentPresenterImpl<T extends IView> extends Fragment implements 
 
     @Override
     public Class<T> getViewClass() {
-        return GenericHelper.getViewClass(getClass());
+        return ParameterizedTypeUtil.getViewClass(getClass());
     }
 
     @Override

@@ -1,7 +1,8 @@
 package xyz.yhsj.mvpro.presenter;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,7 +14,7 @@ import xyz.yhsj.mvpro.view.IView;
  * 将Activity作为Presenter的基类 <br />
  * Created by qibin on 2015/11/15.
  */
-public class ActivityPresenterImpl<T extends IView> extends Activity implements IPresenter<T> {
+public class AppCompatActivityPresenterImpl<T extends IView> extends AppCompatActivity implements IPresenter<T> {
 
     protected T mView;
 
@@ -26,6 +27,7 @@ public class ActivityPresenterImpl<T extends IView> extends Activity implements 
             mView = getViewClass().newInstance();
             mView.bindPresenter(this);
             setContentView(mView.create(getLayoutInflater(), null));
+            initToolbar();
             mView.bindEvent();
             created(savedInstanceState);
         } catch (Exception e) {
@@ -33,6 +35,15 @@ public class ActivityPresenterImpl<T extends IView> extends Activity implements 
         }
     }
 
+    /**
+     * 初始化ToolBar
+     */
+    protected void initToolbar() {
+        Toolbar toolbar = mView.getToolbar();
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
+    }
 
     /**
      * 菜单
@@ -57,6 +68,7 @@ public class ActivityPresenterImpl<T extends IView> extends Activity implements 
     public void create(Bundle savedInstance) {
 
     }
+
 
     @Override
     public void created(Bundle savedInstance) {
@@ -86,6 +98,5 @@ public class ActivityPresenterImpl<T extends IView> extends Activity implements 
             }
         }
     }
-
 
 }

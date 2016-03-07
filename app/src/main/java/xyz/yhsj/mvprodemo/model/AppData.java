@@ -1,5 +1,6 @@
 package xyz.yhsj.mvprodemo.model;
 
+import xyz.yhsj.mvpro.helper.ParameterizedTypeUtil;
 import xyz.yhsj.mvprodemo.model.impl.OnLoadDataListener;
 import xyz.yhsj.mvprodemo.model.empty.User;
 import xyz.yhsj.mvprodemo.model.impl.DataImpl;
@@ -12,6 +13,8 @@ public class AppData implements DataImpl {
 
     @Override
     public void getUser(OnLoadDataListener listener) {
+
+        System.out.println(ParameterizedTypeUtil.getParameterizedType(listener.getClass(), OnLoadDataListener.class, 0));
 
         //生成随机数
         int temp = (int) (Math.random() * 10);

@@ -2,6 +2,7 @@ package xyz.yhsj.mvprodemo.view;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -15,11 +16,17 @@ import xyz.yhsj.mvprodemo.R;
 public class MainView extends ViewImpl {
     @Bind(R.id.fab)
     FloatingActionButton fab;
+    @Bind(R.id.content)
+    TextView content;
+
+    public TextView getContent() {
+        return content;
+    }
 
     @Override
     public void created() {
         super.created();
-        ButterKnife.bind(this,mRootView);
+        ButterKnife.bind(this, mRootView);
     }
 
     @Override
@@ -34,7 +41,6 @@ public class MainView extends ViewImpl {
 
     @Override
     public void bindEvent() {
-        ButterKnife.bind(mPresenter,mRootView);
         EventHelper.click(mPresenter, fab);
     }
 

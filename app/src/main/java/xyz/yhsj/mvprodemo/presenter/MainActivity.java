@@ -2,38 +2,43 @@ package xyz.yhsj.mvprodemo.presenter;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import rx.Observer;
 import xyz.yhsj.mvpro.presenter.AppCompatActivityPresenterImpl;
 import xyz.yhsj.mvprodemo.R;
-import xyz.yhsj.mvprodemo.model.AppData;
-import xyz.yhsj.mvprodemo.model.empty.User;
-import xyz.yhsj.mvprodemo.model.impl.DataImpl;
-import xyz.yhsj.mvprodemo.model.impl.OnLoadDataListener;
+import xyz.yhsj.mvprodemo.model.empty.Weather;
+import xyz.yhsj.mvprodemo.model.impl.WeatherImpl;
 import xyz.yhsj.mvprodemo.view.MainView;
 
 public class MainActivity extends AppCompatActivityPresenterImpl<MainView> implements View.OnClickListener {
-    private DataImpl dataImpl;
+    private WeatherImpl dataImpl;
 
     @Override
     public void created(Bundle savedInstance) {
         super.created(savedInstance);
-        dataImpl = new AppData();
+        dataImpl = new WeatherImpl();
     }
 
     @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.fab) {
-            dataImpl.getUser(new OnLoadDataListener<User>() {
+            dataImpl.getWeather("36.663", "117.009", new Observer<Weather>() {
                 @Override
-                public void onSuccess(User user) {
-                    Toast.makeText(MainActivity.this, user.getName(), Toast.LENGTH_LONG).show();
+                public void onCompleted() {
+
                 }
 
                 @Override
-                public void onError() {
-                    Toast.makeText(MainActivity.this, "请求失败", Toast.LENGTH_LONG).show();
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(Weather weather) {
+                    mView.getContent().setText(new Gson().toJson(weather));
                 }
             });
         }

@@ -6,6 +6,7 @@ import android.view.View;
 import com.google.gson.Gson;
 
 import rx.Observer;
+import rx.functions.Action1;
 import xyz.yhsj.mvpro.presenter.AppCompatActivityPresenterImpl;
 import xyz.yhsj.mvprodemo.R;
 import xyz.yhsj.mvprodemo.model.empty.Weather;
@@ -25,19 +26,9 @@ public class MainActivity extends AppCompatActivityPresenterImpl<MainView> imple
     public void onClick(View v) {
 
         if (v.getId() == R.id.fab) {
-            dataImpl.getWeather("36.663", "117.009", new Observer<Weather>() {
+            dataImpl.getWeather("36.663", "117.009").subscribe(new Action1<Weather>() {
                 @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onNext(Weather weather) {
+                public void call(Weather weather) {
                     mView.getContent().setText(new Gson().toJson(weather));
                 }
             });

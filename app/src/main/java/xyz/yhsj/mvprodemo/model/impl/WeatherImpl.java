@@ -1,5 +1,6 @@
 package xyz.yhsj.mvprodemo.model.impl;
 
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -18,12 +19,11 @@ public class WeatherImpl {
         weatherService = RetrofitClient.getInstance().create(WeatherService.class);
     }
 
-    public void getWeather(String latitude, String longitude, Observer<Weather> observer) {
-        weatherService
+    public Observable<Weather> getWeather(String latitude, String longitude) {
+        return weatherService
                 .getWeather(latitude, longitude)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 
